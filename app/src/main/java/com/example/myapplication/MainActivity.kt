@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import java.lang.Integer.parseInt
+import android.util.Log
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,6 +15,9 @@ class MainActivity : AppCompatActivity() {
 
 
         val  Calculatedvalue= findViewById<TextView>(R.id.calculatedvalue)
+        val  Clear=findViewById<Button>(R.id.clear)
+        val  Allclear=findViewById<Button>(R.id.allclear)
+        val  Signchange=findViewById<Button>(R.id.signchange)
         val  Num1=findViewById<Button>(R.id.num1)
         val  Num2=findViewById<Button>(R.id.num2)
         val  Num3=findViewById<Button>(R.id.num3)
@@ -23,21 +28,56 @@ class MainActivity : AppCompatActivity() {
         val  Num8=findViewById<Button>(R.id.num8)
         val  Num9=findViewById<Button>(R.id.num9)
         val  Num0=findViewById<Button>(R.id.num0)
-        val  Plus=findViewById<Button>(R.id.add)
+        val  Num00=findViewById<Button>(R.id.num00)
+        val  Add=findViewById<Button>(R.id.add)
+        val  Sub=findViewById<Button>(R.id.sub)
+        val  Mul=findViewById<Button>(R.id.mul)
+        val  Div=findViewById<Button>(R.id.div)
         val  Equal=findViewById<Button>(R.id.equal)
-        var count:Float= 0F
-        var tmp:Float= 0F
+        var count= 0F
+        var tmp= 0F
         var curoperator=""
+        var mulcount=0
 
-        Plus.setOnClickListener {
-
+        Add.setOnClickListener {
+            tmp=calculation(curoperator,tmp,count)
+            Calculatedvalue.setText(tmp.toString())
+            count=0F
+            curoperator="add"
+        }
+        Sub.setOnClickListener {
+            tmp=calculation(curoperator,tmp,count)
+            Calculatedvalue.setText(tmp.toString())
+            count=0F
+            curoperator="sub"
+        }
+        Mul.setOnClickListener {
+            if (count!=0F) {
+                tmp = calculation(curoperator, tmp, count)
+                Calculatedvalue.setText(tmp.toString())
+                count = 0F
+            }
+            curoperator="mul"
+        }
+        Div.setOnClickListener {
+            if (count!=0F) {
+                tmp = calculation(curoperator, tmp, count)
+                Calculatedvalue.setText(tmp.toString())
+                count = 0F
+            }
+            curoperator="div"
         }
         Equal.setOnClickListener {
-            Calculatedvalue.setText((count+tmp).toString())
-            tmp=0F
+            tmp=calculation(curoperator,tmp,count)
+            Calculatedvalue.setText(tmp.toString())
+            count=0F
         }
         Num0.setOnClickListener {
             count *= 10
+            Calculatedvalue.setText(count.toString())
+        }
+        Num00.setOnClickListener {
+            count *= 100
             Calculatedvalue.setText(count.toString())
         }
         Num1.setOnClickListener {
@@ -76,26 +116,36 @@ class MainActivity : AppCompatActivity() {
             count = count*10+9
             Calculatedvalue.setText(count.toString())
         }
-
-        fun calculation(){
-            if(curoperator=="add"){
-                tmp += count
-                count = 0F
-                Calculatedvalue.setText(tmp.toString())
-            }else if(curoperator=="sub"){
-                tmp -= count
-                count = 0F
-                Calculatedvalue.setText(tmp.toString())
-            }else if(curoperator=="mul"){
-                tmp *= count
-                count = 0F
-                Calculatedvalue.setText(tmp.toString())
-            }else if(curoperator=="div"){
-                tmp /= count
-                count = 0F
-                Calculatedvalue.setText(tmp.toString())
+        Clear.setOnClickListener {
+            count=0F
+            Calculatedvalue.setText(count.toString())
+        }
+        Allclear.setOnClickListener {
+            count=0F
+            tmp=0F
+            Calculatedvalue.setText(count.toString())
+            curoperator=""
+        }
+        Signchange.setOnClickListener {
+            if (count!=0F) {
+                count *= -1
+                Calculatedvalue.setText(count.toString())
             }
+        }
 
+    }
+
+    private fun calculation(curoperator:String,tmp:Float,count:Float): Float {
+        return if(curoperator=="add"){
+            tmp+count
+        }else if(curoperator=="sub"){
+            tmp-count
+        }else if(curoperator=="mul"){
+            tmp*count
+        }else if(curoperator=="div"){
+            tmp/count
+        }else{
+            count
         }
     }
 }
