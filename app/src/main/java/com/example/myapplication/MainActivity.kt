@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var  tmp = 0
+
         val  Calculatedvalue= findViewById<TextView>(R.id.calculatedvalue)
         val  Num1=findViewById<Button>(R.id.num1)
         val  Num2=findViewById<Button>(R.id.num2)
@@ -27,15 +27,17 @@ class MainActivity : AppCompatActivity() {
         val  Num0=findViewById<Button>(R.id.num0)
         val  Plus=findViewById<Button>(R.id.plus)
         val  Equal=findViewById<Button>(R.id.equal)
-        var count=parseInt(Calculatedvalue.text.toString())
+        var count=0
+        var  tmp = 0
 
         Plus.setOnClickListener {
             tmp += count
             count = 0
-            Calculatedvalue.setText("0")
+            Calculatedvalue.setText(tmp.toString())
         }
         Equal.setOnClickListener {
             Calculatedvalue.setText((count+tmp).toString())
+            tmp=0
         }
         Num0.setOnClickListener {
             count *= 10
