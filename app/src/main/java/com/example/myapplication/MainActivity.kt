@@ -3,10 +3,8 @@ package com.example.myapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import java.lang.Integer.parseInt
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,19 +23,18 @@ class MainActivity : AppCompatActivity() {
         val  Num8=findViewById<Button>(R.id.num8)
         val  Num9=findViewById<Button>(R.id.num9)
         val  Num0=findViewById<Button>(R.id.num0)
-        val  Plus=findViewById<Button>(R.id.plus)
+        val  Plus=findViewById<Button>(R.id.add)
         val  Equal=findViewById<Button>(R.id.equal)
-        var count=0
-        var  tmp = 0
+        var count:Float= 0F
+        var tmp:Float= 0F
+        var curoperator=""
 
         Plus.setOnClickListener {
-            tmp += count
-            count = 0
-            Calculatedvalue.setText(tmp.toString())
+
         }
         Equal.setOnClickListener {
             Calculatedvalue.setText((count+tmp).toString())
-            tmp=0
+            tmp=0F
         }
         Num0.setOnClickListener {
             count *= 10
@@ -80,5 +77,25 @@ class MainActivity : AppCompatActivity() {
             Calculatedvalue.setText(count.toString())
         }
 
+        fun calculation(){
+            if(curoperator=="add"){
+                tmp += count
+                count = 0F
+                Calculatedvalue.setText(tmp.toString())
+            }else if(curoperator=="sub"){
+                tmp -= count
+                count = 0F
+                Calculatedvalue.setText(tmp.toString())
+            }else if(curoperator=="mul"){
+                tmp *= count
+                count = 0F
+                Calculatedvalue.setText(tmp.toString())
+            }else if(curoperator=="div"){
+                tmp /= count
+                count = 0F
+                Calculatedvalue.setText(tmp.toString())
+            }
+
+        }
     }
 }
